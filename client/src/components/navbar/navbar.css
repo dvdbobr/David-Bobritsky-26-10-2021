@@ -1,0 +1,14 @@
+.navbar {
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #999;
+    height: 70px;
+    width: 100vw;
+}
+
+.navbarLeft>span {
+    font-weight: bold;
+    font-size: clamp(1rem, 2vw, 2rem);
+}

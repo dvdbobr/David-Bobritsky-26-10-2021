@@ -2,9 +2,10 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const path = require('path');
-const router = require("./server/routes");
+const router = require("./server/routes/weatherRoutes");
 app.use(cors());
 const port = 5000;
+
 
 app.use(express.json());
 app.use("/api", router);

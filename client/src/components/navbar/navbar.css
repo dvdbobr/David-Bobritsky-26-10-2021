@@ -3,7 +3,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #999;
+    background-color: pink;
     height: 70px;
     width: 100vw;
 }
@@ -11,4 +11,24 @@
 .navbarLeft>span {
     font-weight: bold;
     font-size: clamp(1rem, 2vw, 2rem);
+}
+a {
+    text-decoration: none;
+}
+
+a>button>span {
+    font-weight: bold;
+}
+
+a>button[aria-pressed="true"]>span {
+    color: white;
+}
+
+@media (max-width: 880px) {
+    /* .navbar-left>span {
+        font-size: 1rem;
+    } */
+    .navbar {
+        padding: 0 15px;
+    }
 }

@@ -3,16 +3,21 @@ import "./searchBar.css";
 import axios from "axios";
 import SearchIcon from "@mui/icons-material/Search";
 import IconButton from "@mui/material/IconButton";
+import { useDispatch, useSelector } from "react-redux";
+import { getCurrentWeather } from "../../redux/actions/weatherActions";
 
 export default function SearchBar() {
   const [searchValue, setSearchValue] = useState("");
   const [citiesResult, setCitiesResult] = useState("");
-  const [currentWeather, setCurrentWeather] = useState();
+  const currentWeatherData = useSelector((state) => state.currentWeather);
+  const { loading, error, currentWeather } = currentWeatherData;
+  const dispatch = useDispatch();
 
   const search = async () => {
-    if (localStorage.getItem("currentCity")) {
-      setCitiesResult(JSON.parse(localStorage.getItem("currentCity")));
-    } else {
+    // if (localStorage.getItem("currentCity")) {
+    //   setCitiesResult(JSON.parse(localStorage.getItem("currentCity")));
+    // } 
+    // else {
       try {
         if (/^[A-Za-z ]*$/.test(searchValue)) {
           console.log("in search function");
@@ -20,32 +25,18 @@ export default function SearchBar() {
             `/api/autoComplete?q=${searchValue}`
           );
           setCitiesResult(response.data);
-          //   localStorage.setItem("currentCity", JSON.stringify(response.data));
           console.log(response.data[0]);
           console.log(citiesResult);
         }
       } catch (err) {
         console.log(err);
       }
-    }
+    // }
   };
-  const getCurrentWeather = async (cityKey, cityName) => {
-    if (localStorage.getItem("currentCity")) {
-      setCitiesResult(JSON.parse(localStorage.getItem("currentCity")));
-    } else {
-      try {
-        console.log(cityKey);
-        console.log("in search2 function");
-        setSearchValue(cityName);
-        const response = await axios.get(`/api/currentWeather/${cityKey}`);
-        setCurrentWeather(response.data);
-        //   localStorage.setItem("currentCity", JSON.stringify(response.data));
-        console.log(response.data);
-        console.log(currentWeather);
-      } catch (err) {
-        console.log(err);
-      }
-    }
+  const searchAfterClickOnCity = async (cityKey, cityName) => {
+    console.log("in search2 function");
+    dispatch(getCurrentWeather(cityKey,cityName));
+    setSearchValue(cityName);
   };
 
   useEffect(() => {
@@ -72,14 +63,14 @@ export default function SearchBar() {
           <SearchIcon />
         </IconButton>
       </div>
-      {searchValue && citiesResult ? (
+      {searchValue && citiesResult.length > 0 ? (
         <div className="searchData">
           {citiesResult.map((c) => {
             return (
               <div
                 key={c.Key}
                 onClick={() => {
-                  getCurrentWeather(c.Key, c.LocalizedName);
+                  searchAfterClickOnCity(c.Key, c.LocalizedName);
                 }}
               >
                 {c.LocalizedName}, {c.AdministrativeArea.LocalizedName},{" "}

@@ -4,7 +4,7 @@ import axios from "axios";
 import SearchIcon from "@mui/icons-material/Search";
 import IconButton from "@mui/material/IconButton";
 import { useDispatch, useSelector } from "react-redux";
-import { getCurrentWeather } from "../../redux/actions/weatherActions";
+import { getCurrentWeather, getForecast } from "../../redux/actions/weatherActions";
 
 export default function SearchBar() {
   const [searchValue, setSearchValue] = useState("");
@@ -36,6 +36,7 @@ export default function SearchBar() {
   const searchAfterClickOnCity = async (cityKey, cityName) => {
     console.log("in search2 function");
     dispatch(getCurrentWeather(cityKey,cityName));
+    dispatch(getForecast(cityKey));
     setSearchValue(cityName);
   };
 

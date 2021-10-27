@@ -1,0 +1,21 @@
+.favorites {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 80%;
+    margin:0 auto;
+    margin-top: 4rem;
+    gap: 2rem;
+}
+.favoriteCard {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background-color: aquamarine;
+    border-radius: 10px;
+    border: 2px solid;
+}

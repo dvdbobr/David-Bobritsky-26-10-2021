@@ -7,6 +7,7 @@ import {
   forecastReducer,
 } from "./reducers/weatherReducers";
 import { favoritesReducer } from "./reducers/favoritesReducers";
+import { themeReducer } from "./reducers/themeReducers";
 
 
 const initialState = {
@@ -26,6 +27,7 @@ const reducer = combineReducers({
   currentWeather: currentWeatherReducer,
   forecast: forecastReducer,
   favorites: favoritesReducer,
+  theme: themeReducer,
 });
 
 const store = createStore(

@@ -10,25 +10,39 @@
     height: 200px;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    background-color: aquamarine;
+    background-color: white;
     border-radius: 10px;
     border: 2px solid;
+    padding: 10px;
+    font-size: 1.2rem;
+}
+
+.forecastCardDay {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.forecastCardDegrees {
+    font-size: 1.5rem;
 }
 
 @media (max-width: 1200px) {
     .forecastCardContainer {
-        width: 150px;
-        height: 150px;
+        width: 188px;
+        height: 200px;
     }
 }
 
 @media (max-width: 880px) {
     .forecastCardContainer {
         width: 100%;
-        height: 60px;
+        height: 100px;
         flex-direction: column;
         margin-top: 5px;
+    }
+    .forecastCardDay {
+        font-size: 1.5rem;
     }
 }

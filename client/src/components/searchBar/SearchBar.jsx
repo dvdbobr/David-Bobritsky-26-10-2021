@@ -4,10 +4,14 @@ import axios from "axios";
 import SearchIcon from "@mui/icons-material/Search";
 import IconButton from "@mui/material/IconButton";
 import { useDispatch, useSelector } from "react-redux";
-import { getCurrentWeather, getForecast } from "../../redux/actions/weatherActions";
+import {
+  getCurrentWeather,
+  getForecast,
+} from "../../redux/actions/weatherActions";
 
 export default function SearchBar() {
   const [searchValue, setSearchValue] = useState("");
+  const [isEnglish, setIsEnglish] = useState(true);
   const [citiesResult, setCitiesResult] = useState("");
   const currentWeatherData = useSelector((state) => state.currentWeather);
   const { loading, error, currentWeather } = currentWeatherData;
@@ -16,26 +20,30 @@ export default function SearchBar() {
   const search = async () => {
     // if (localStorage.getItem("currentCity")) {
     //   setCitiesResult(JSON.parse(localStorage.getItem("currentCity")));
-    // } 
+    // }
     // else {
-      try {
-        if (/^[A-Za-z ]*$/.test(searchValue)) {
-          console.log("in search function");
-          const response = await axios.get(
-            `/api/autoComplete?q=${searchValue}`
-          );
-          setCitiesResult(response.data);
-          console.log(response.data[0]);
-          console.log(citiesResult);
-        }
-      } catch (err) {
-        console.log(err);
-      }
+    try {
+      const response = await axios.get(`/api/autoComplete?q=${searchValue}`);
+      setCitiesResult(response.data);
+      console.log(response.data[0]);
+      console.log(citiesResult);
+    } catch (err) {
+      console.log(err);
+    }
     // }
   };
+  const checkEnglish = (e) => {
+    if (/[^A-Za-z ]/gi.test(e.target.value)) {
+      setIsEnglish(false);
+    } else {
+      setIsEnglish(true);
+      let value = e.target.value;
+      value = value.replace(/[^A-Za-z ]/gi, "");
+      setSearchValue(value);
+    }
+  };
   const searchAfterClickOnCity = async (cityKey, cityName) => {
-    console.log("in search2 function");
-    dispatch(getCurrentWeather(cityKey,cityName));
+    dispatch(getCurrentWeather(cityKey, cityName));
     dispatch(getForecast(cityKey));
     setSearchValue(cityName);
   };
@@ -43,7 +51,7 @@ export default function SearchBar() {
   useEffect(() => {
     if (searchValue.length > 0) {
       const delayDebounce = setTimeout(() => {
-        console.log(searchValue);
+        search();
       }, 3000);
 
       return () => clearTimeout(delayDebounce);
@@ -53,10 +61,12 @@ export default function SearchBar() {
     <div className="searchBar">
       <input
         type="text"
-        placeholder="Search for a city"
-        value={searchValue}
+        placeholder={
+          isEnglish ? "Search for a city" : "Please Use English Only"
+        }
+        value={isEnglish ? searchValue : ""}
         onChange={(e) => {
-          setSearchValue(e.target.value);
+          checkEnglish(e);
         }}
       />
       <div className="searchIcon">
@@ -81,9 +91,6 @@ export default function SearchBar() {
           })}
         </div>
       ) : null}
-      {/* <button onClick={() => getCurrentWeather(result[0]["Key"])}>
-    getWeather
-  </button> */}
     </div>
   );
 }

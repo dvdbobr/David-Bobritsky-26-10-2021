@@ -4,18 +4,33 @@
     align-items: center;
     flex-wrap: wrap;
     width: 80%;
-    margin:0 auto;
+    margin: 0 auto;
     margin-top: 4rem;
     gap: 2rem;
 }
+
 .favoriteCard {
-    width: 200px;
+    width: 180px;
     height: 200px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    background-color: aquamarine;
+    background-color: white;
     border-radius: 10px;
     border: 2px solid;
+    font-size: 1.5rem;
+    font-weight: bold;
+    position: relative;
+}
+
+.removeFav {
+    padding:5px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.favoriteCard>button {
+    font-weight: bold;
 }

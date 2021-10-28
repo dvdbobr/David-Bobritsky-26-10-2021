@@ -35,7 +35,6 @@ router
           },
         });
         res.status(200).send(response.data);
-        // console.log(`response from CurrentWeather ${response.data}`)
       } catch (err) {
         res.status(500).send(err);
       }
@@ -53,7 +52,6 @@ router
           },
         });
         res.status(200).send(response.data);
-        console.log(`reponse from forecast ${response.data}`);
       } catch (err) {
         res.status(500).send(err);
       }

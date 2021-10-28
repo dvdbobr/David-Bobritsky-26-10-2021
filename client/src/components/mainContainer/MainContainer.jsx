@@ -1,72 +1,64 @@
 import React, { useEffect, useState } from "react";
-import IconButton from "@mui/material/IconButton";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentWeather } from "../../redux/actions/weatherActions";
 import "./mainContainer.css";
 import ForecastCards from "../forecastCard/ForecastCards";
-import {
-  addToFavorites,
-  removeFromFavorites,
-} from "../../redux/actions/favoritesActions";
+import LikeButton from "../likeButton/LikeButton";
+import CircularProgress from "@mui/material/CircularProgress";
+import { useParams } from "react-router";
+
 export default function MainContainer() {
   const dispatch = useDispatch();
   const currentWeatherData = useSelector((state) => state.currentWeather);
   const { loading, error, currentWeather } = currentWeatherData;
-  const favorites = useSelector((state) => state.favorites.favorites);
-  const [liked, setLiked] = useState();
-  
-  const changeLike = () => {
-    if (!liked) {
-      dispatch(addToFavorites(currentWeather));
-    } else {
-      dispatch(removeFromFavorites(currentWeather.cityKey));
-    }
-    setLiked(!liked);
-  };
+  const [degreeUnit, setDegreeUnit] = useState("fahrenheit");
+  const params = useParams();
+
   useEffect(() => {
-    setLiked(favorites.filter((c => c.cityKey===currentWeather.cityKey)).length)
-    dispatch(getCurrentWeather("215854", "Tel Aviv"));
-  }, [liked]);
+    console.log(params.cityKey);
+    // setLiked(
+    //   favorites.filter((c) => c.cityKey === currentWeather.cityKey).length
+    // );
+    if (params.cityKey) {
+      dispatch(getCurrentWeather(params.cityKey, params.cityName));
+    } else {
+      currentWeather.cityKey
+        ? dispatch(
+            getCurrentWeather(currentWeather.cityKey, currentWeather.cityName)
+          )
+        : dispatch(getCurrentWeather("215854", "Tel Aviv"));
+    }
+  }, []);
   return (
     <div className="mainContainer">
       <div className="mainContainerTopRow">
         <div className="degrees">
           <h2>{currentWeather?.cityName}</h2>
           <span className="degrees">
-            {loading ? (
-              <h1>spinner</h1>
-            ) : error ? (
+            {loading ? null : error ? (
               <h1>{error}</h1>
             ) : (
-              Math.round(currentWeather?.details?.Temperature.Metric.Value)
+              <span>
+                {Math.round(
+                  currentWeather?.details?.Temperature.Imperial.Value
+                )}
+                {degreeUnit === "celsius" ? "C" : "F"}
+                &deg;
+              </span>
             )}
-            C&deg;
           </span>
         </div>
-        <div className="likeBtn">
-          {liked ? (
-            <IconButton
-              aria-label="FavoriteBorderIcon"
-              color="error"
-              onClick={changeLike}
-            >
-              <FavoriteIcon style={{ fontSize: 42 }} />
-            </IconButton>
-          ) : (
-            <IconButton
-              aria-label="FavoriteBorderIcon"
-              color="error"
-              onClick={changeLike}
-            >
-              <FavoriteBorderIcon style={{ fontSize: 42 }} />
-            </IconButton>
-          )}
-        </div>
+        <LikeButton />
       </div>
-      <h1 style={{ textAlign: "center" }}>
-        {currentWeather ? currentWeather["WeatherText"] : ""}
+      <h1 className="mainWeatherText">
+        {loading ? (
+          <CircularProgress />
+        ) : error ? (
+          <h1>error</h1>
+        ) : (
+          currentWeather.details?.WeatherText
+        )}
       </h1>
       <ForecastCards />
     </div>

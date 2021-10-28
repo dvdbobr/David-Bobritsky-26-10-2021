@@ -3,8 +3,17 @@ import "./navbar.css";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { Link, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { changeTheme } from "../../redux/actions/themeActions";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
 export default function Navbar() {
   const location = useLocation();
+  const dispatch = useDispatch();
+  const currentTheme = useSelector((state) => state.theme.theme);
+  const switchTheme = (theme) => {
+    dispatch(changeTheme(theme));
+  };
   return (
     <div className="navbar">
       <div className="navbarLeft">
@@ -32,6 +41,19 @@ export default function Navbar() {
               <span>favorites</span>
             </ToggleButton>
           </Link>
+          <span className="theme">
+            {currentTheme === "dark" ? (
+              <LightModeIcon
+                style={{ fontSize: 42,color:"yellow" }}
+                onClick={() => switchTheme(currentTheme)}
+              />
+            ) : (
+              <DarkModeIcon
+                style={{ fontSize: 42,color:"black" }}
+                onClick={() => switchTheme(currentTheme)}
+              />
+            )}
+          </span>
         </ToggleButtonGroup>
       </div>
     </div>

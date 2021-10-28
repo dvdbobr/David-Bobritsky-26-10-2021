@@ -1,8 +1,8 @@
 .mainContainer {
     margin: 0 auto;
     margin-top: 2rem;
-    width: 80%;
-    height: 500px;
+    width: 85%;
+    height: 700px;
     background-color: lightcyan;
     display: flex;
     justify-content: space-between;
@@ -16,9 +16,27 @@
 .mainContainerTopRow{
     display: flex;
     justify-content: space-between;
+    align-items: center;
     height:20%;
     width: 100%;
 }
 .degrees{
     padding:5px;
+    font-size: 2rem;
+}
+.mainWeatherText{
+    font-size:3rem;
+}
+
+@media (max-width: 1200px) {
+    .mainContainer {
+        width: 100%;
+        min-height: auto;
+    }
+    .mainWeatherText{
+        font-size:2rem;
+    }
+    .degrees{
+        font-size:1.4rem;
+    }
 }

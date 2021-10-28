@@ -24,7 +24,6 @@ export const getCurrentWeather = (cityKey, cityName) => async (dispatch) => {
     type: weatherActions.CURRENT_WEATHER_REQUEST,
   });
 
-  console.log("im in currentWeather action");
   try {
     if (localStorage.getItem("currentWeather")) {
       console.log("in storage");
@@ -39,9 +38,7 @@ export const getCurrentWeather = (cityKey, cityName) => async (dispatch) => {
     } else {
       console.log("not in storage");
       const data = await axios.get(`/api/currentWeather/${cityKey}`);
-      console.log(
-        `data in currentWeather action ${JSON.stringify(data.data[0])}`
-      );
+
       dispatch({
         type: weatherActions.CURRENT_WEATHER_SUCCESS,
         payload: {
@@ -64,7 +61,7 @@ export const getForecast = (cityKey) => async (dispatch) => {
   dispatch({
     type: weatherActions.FORECAST_REQUEST,
   });
-  console.log("im in forecast action");
+  // console.log("im in forecast action");
   try {
     if (localStorage.getItem("forecast")) {
       console.log("in storage");
@@ -75,7 +72,6 @@ export const getForecast = (cityKey) => async (dispatch) => {
     } else {
       console.log("not in storage");
       const data = await axios.get(`/api/forecast/${cityKey}`);
-      console.log(`data in forecast action ${JSON.stringify(data.data)}`);
       dispatch({
         type: weatherActions.FORECAST_SUCCESS,
         payload: data.data,

@@ -18,28 +18,14 @@ export default function MainContainer() {
   const geoLocation = useState(JSON.parse(localStorage.getItem("geoLocation")));
 
   useEffect(() => {
-    const getCurrentLocation = async () => {
-      try {
-        if (params.cityKey) {
-          dispatch(getCurrentWeather(params.cityKey, params.cityName));
-        } else if (geoLocation) {
-          const res = await axios({
-            method: "GET",
-            url: "/api/geoLocation/",
-            params: {
-              q: `${geoLocation[0].latitude},${geoLocation[0].longitude}`,
-            },
-          });
-          dispatch(getCurrentWeather(res.data.Key, res.data.EnglishName));
-        } else {
-          dispatch(getCurrentWeather("215854", "Tel Aviv"));
-        }
-      } catch (e) {
-        console.log(e);
+    if (params.cityKey) {
+      dispatch(getCurrentWeather(params.cityKey, params.cityName));
+    } else {
+      if (!geoLocation) {
+        dispatch(getCurrentWeather("215854", "Tel Aviv"));
       }
-    };
-    getCurrentLocation();
-  }, []);
+    }
+  }, [dispatch]);
   return (
     <div
       className={`mainContainer ${
@@ -65,8 +51,7 @@ export default function MainContainer() {
                           5) /
                           9
                       )}C°`
-                  : null
-                  }
+                  : null}
               </span>
             )}
           </span>

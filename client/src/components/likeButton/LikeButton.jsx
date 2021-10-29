@@ -7,6 +7,7 @@ import {
   addToFavorites,
   removeFromFavorites,
 } from "../../redux/actions/favoritesActions";
+import "./likeButton.css";
 
 export default function LikeButton() {
   const dispatch = useDispatch();
@@ -24,15 +25,15 @@ export default function LikeButton() {
     setLiked(!liked);
   };
   useEffect(() => {
-      const fav = favorites.map(f=>{
-        return f.cityKey;
-      })
-      setLiked(fav.includes(currentWeather.cityKey))
+    const fav = favorites.map((f) => {
+      return f.cityKey;
+    });
+    setLiked(fav.includes(currentWeather.cityKey));
 
     // setLiked(
     //   favorites.filter((c) => c.cityKey === fromStorage.cityKey).length
     // );
-  }, [favorites,currentWeather]);
+  }, [favorites, currentWeather]);
   return (
     <div className="likeBtn">
       {liked ? (

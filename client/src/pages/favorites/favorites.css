@@ -1,0 +1,14 @@
+.favoritesPage {
+    overflow-x: hidden;
+    width: 100vw;
+    height: 100vh;
+    background: var(--lightMainBackground);
+}
+
+.darkMode {
+    background: var(--darkBackground);
+}
+
+.darkMode>* {
+    color: var(--darkText) !important;
+}

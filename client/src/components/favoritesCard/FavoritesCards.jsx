@@ -11,6 +11,9 @@ export default function FavoritesCards() {
   const dispatch = useDispatch();
   const history = useHistory();
   const favorites = useSelector((state) => state.favorites.favorites);
+  const currentTheme = useSelector((state) => state.theme.theme);
+  const currentDegreeUnit = useSelector((state) => state.theme.degreeUnit);
+
   const openFavorite = (cityName, cityKey) => {
     history.push(`/details/${cityName}/${cityKey}`);
   };
@@ -20,12 +23,18 @@ export default function FavoritesCards() {
   useEffect(() => {
     // dispatch(getForecast("215854"));
   }, [favorites]);
+
   return (
     <div className="favorites">
       {favorites.length > 0 ? (
         favorites?.map((c) => {
           return (
-            <div className="favoriteCard" key={c.cityKey}>
+            <div
+              className={`favoriteCard ${
+                currentTheme === "dark" ? "darkModeFavorites" : ""
+              }`}
+              key={c.cityKey}
+            >
               <span className="removeFav">
                 <HighlightOffIcon
                   onClick={() => removeFavorite(c.cityKey)}
@@ -33,7 +42,13 @@ export default function FavoritesCards() {
                 />
               </span>
               <span>{c.cityName}</span>
-              <span>{c.details.Temperature.Imperial.Value}F&deg;</span>
+              <span>
+                {currentDegreeUnit === "fahrenheit"
+                  ? `${Math.round(c.details?.Temperature.Imperial.Value)}F°`
+                  : `${Math.round(
+                      ((c.details?.Temperature.Imperial.Value - 32) * 5) / 9
+                    )}C°`}
+              </span>
               <span>{c.details.WeatherText}</span>
               <Button
                 onClick={() => openFavorite(c.cityName, c.cityKey)}

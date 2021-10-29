@@ -13,10 +13,11 @@ export default function MainContainer() {
   const currentWeatherData = useSelector((state) => state.currentWeather);
   const { loading, error, currentWeather } = currentWeatherData;
   const [degreeUnit, setDegreeUnit] = useState("fahrenheit");
+  const currentTheme = useSelector((state) => state.theme.theme);
+  const currentDegreeUnit = useSelector((state) => state.theme.degreeUnit);
   const params = useParams();
 
   useEffect(() => {
-    console.log(params.cityKey);
     // setLiked(
     //   favorites.filter((c) => c.cityKey === currentWeather.cityKey).length
     // );
@@ -31,7 +32,11 @@ export default function MainContainer() {
     }
   }, []);
   return (
-    <div className="mainContainer">
+    <div
+      className={`mainContainer ${
+        currentTheme === "dark" ? "darkModeMainContaier" : ""
+      }`}
+    >
       <div className="mainContainerTopRow">
         <div className="degrees">
           <h2>{currentWeather?.cityName}</h2>
@@ -40,11 +45,16 @@ export default function MainContainer() {
               <h1>{error}</h1>
             ) : (
               <span>
-                {Math.round(
-                  currentWeather?.details?.Temperature.Imperial.Value
-                )}
-                {degreeUnit === "celsius" ? "C" : "F"}
-                &deg;
+                {currentDegreeUnit === "fahrenheit"
+                  ? `${Math.round(
+                      currentWeather?.details?.Temperature.Imperial.Value
+                    )}F°`
+                  : `${Math.round(
+                      ((currentWeather?.details?.Temperature.Imperial.Value -
+                        32) *
+                        5) /
+                        9
+                    )}C°`}
               </span>
             )}
           </span>

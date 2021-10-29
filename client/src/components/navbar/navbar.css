@@ -16,6 +16,18 @@
 .theme{
     margin: 0 10px;
 }
+.degreeToggle{
+    margin-right: 20px;
+}
+.darkNavbar{
+    background-color: var(--darkNavbar);
+}
+.darkNavbar>div>span{
+    color: var(--darkText)
+}
+.darkNavbar>.navbarRight>a>button[aria-pressed="false"]>span {
+    color: var(--darkSecondaryText)
+}
 
 a {
     text-decoration: none;
@@ -25,9 +37,23 @@ a>button>span {
     font-weight: bold;
 }
 
-a>button[aria-pressed="true"]>span {
-    color: white;
+.MuiButtonBase-root {
+    background-color: rgba(255, 255, 255, 0.411) !important;
 }
+.MuiButtonBase-root[aria-pressed="false"]{
+    color: var(--darkSecondaryText) !important
+}
+.Mui-selected{
+    background-color:rgba(10, 3, 3, 0.102) !important;
+    color:white !important
+}
+.darkNavbar>.navbarRight .MuiButtonBase-root{
+    background-color: rgba(255, 255, 255, 0.198) !important
+}
+.darkNavbar>.navbarRight .Mui-selected{
+    background-color: rgba(255, 255, 255, 0.411) !important;
+}
+
 
 @media (max-width: 880px) {
     /* .navbar-left>span {

@@ -12,6 +12,8 @@ export default function ForecastCards() {
     (state) => state.currentWeather.currentWeather
   );
   const { loading, error, forecast } = forecastData;
+  const currentTheme = useSelector((state) => state.theme.theme);
+  const currentDegreeUnit = useSelector((state) => state.theme.degreeUnit);
 
   const dayOfWeek = (forecastDate) => {
     const date = new Date(forecastDate.slice(0, forecastDate.indexOf("T")));
@@ -38,7 +40,11 @@ export default function ForecastCards() {
       ) : (
         forecast?.DailyForecasts?.map((card) => {
           return (
-            <div className="forecastCardContainer">
+            <div
+              className={`forecastCardContainer ${
+                currentTheme === "dark" ? "darkModeForecast" : ""
+              }`}
+            >
               <div className="forecastCardDay">
                 <span>{dayOfWeek(card.Date)}</span>
                 {/* <span>
@@ -50,8 +56,13 @@ export default function ForecastCards() {
               </div>
 
               <span className="forecastCardDegrees">
-                {card.Temperature.Minimum.Value}F&deg;/
-                {card.Temperature.Maximum.Value}F&deg;
+                {currentDegreeUnit === "fahrenheit"
+                  ? `${card.Temperature.Minimum.Value}F°/${card.Temperature.Maximum.Value}F°`
+                  : `${Math.round(
+                      ((card.Temperature.Minimum.Value - 32) * 5) / 9
+                    )}C°/${Math.round(
+                      ((card.Temperature.Maximum.Value - 32) * 5) / 9
+                    )}C°`}
               </span>
               <span>{card.Day.IconPhrase}</span>
               {/* <span>Night: {card.Night.IconPhrase}</span> */}

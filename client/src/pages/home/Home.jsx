@@ -3,18 +3,12 @@ import MainContainer from "../../components/mainContainer/MainContainer";
 import Navbar from "../../components/navbar/Navbar";
 import SearchBar from "../../components/searchBar/SearchBar";
 import "./home.css";
-import { useDispatch } from "react-redux";
-
-
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Home() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-
-  }, [])
+  const currentTheme = useSelector((state) => state.theme.theme);
   return (
-    <div className="home">
+    <div className={`home ${currentTheme === "dark" ? "darkMode" : ""}`}>
       <Navbar />
       <SearchBar />
       <MainContainer />

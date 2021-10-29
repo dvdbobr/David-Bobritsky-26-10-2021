@@ -1,10 +1,21 @@
 :root {
     --lightBackground: lightgray;
     --lightMainBackground: whitesmoke; 
+    --darkBackground:#121212;
+    --darkMainContaierBackground:#404040;
+    --darkNavbar:#181818;
+    --darkText:#FFFFFF;
+    --darkSecondaryText:#B3B3B3;
   }
 .home{
     overflow-x:hidden;
     width: 100vw;
     height: 100vh;
     background: var(--lightMainBackground);
+}
+.darkMode{
+  background: var(--darkBackground);
+}
+.darkMode > *{
+  color:var(--darkText) !important;
 }

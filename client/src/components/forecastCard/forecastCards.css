@@ -12,9 +12,9 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    background-color: white;
+    background: white;
     border-radius: 10px;
-    border: 2px solid;
+    border: 2px solid black;
     padding: 10px;
     font-size: 1.2rem;
 }
@@ -27,7 +27,9 @@
 .forecastCardDegrees {
     font-size: 1.5rem;
 }
-
+.darkModeForecast{
+    background-color:var(--darkSecondaryText)
+}
 @media (max-width: 1200px) {
     .forecastCardContainer {
         width: 188px;

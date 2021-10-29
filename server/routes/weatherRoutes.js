@@ -57,7 +57,7 @@ router
       }
     }
   })
-  .get("/geolocation", async (req, res) => {
+  .get("/geoLocation", async (req, res) => {
     const { q } = req.query;
     try {
       if (q) {
@@ -72,7 +72,6 @@ router
         res.status(200).send(response.data);
       }
     } catch (err) {
-      console.log(err);
       res.status(500).send(err);
     }
   });

@@ -5,8 +5,6 @@ export const changeTheme = (theme) => (dispatch) => {
   dispatch({ type: SWITCH_THEME, payload: theme });
 };
 export const changeDegreeUnits = (unit) => (dispatch) => {
-  console.log(unit)
   unit = unit === "fahrenheit" ? "celsius" : "fahrenheit";
-  console.log(unit)
   dispatch({ type: SWITCH_DEGREE_UNIT, payload: unit });
 };

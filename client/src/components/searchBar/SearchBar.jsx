@@ -13,27 +13,18 @@ export default function SearchBar() {
   const [searchValue, setSearchValue] = useState("");
   const [isEnglish, setIsEnglish] = useState(true);
   const [citiesResult, setCitiesResult] = useState("");
-  const currentWeatherData = useSelector((state) => state.currentWeather);
   const currentTheme = useSelector((state) => state.theme.theme);
-  const { loading, error, currentWeather } = currentWeatherData;
-  const [closeSearches,setCloseSearches] = useState(false);
+  const [closeSearches, setCloseSearches] = useState(false);
   const dispatch = useDispatch();
 
   const search = async () => {
-    // if (localStorage.getItem("currentCity")) {
-    //   setCitiesResult(JSON.parse(localStorage.getItem("currentCity")));
-    // }
-    // else {
-      setCloseSearches(false);
+    setCloseSearches(false);
     try {
       const response = await axios.get(`/api/autoComplete?q=${searchValue}`);
       setCitiesResult(response.data);
-      console.log(response.data[0]);
-      console.log(citiesResult);
     } catch (err) {
       console.log(err);
     }
-    // }
   };
   const checkEnglish = (e) => {
     if (/[^A-Za-z ]/gi.test(e.target.value)) {
@@ -49,18 +40,20 @@ export default function SearchBar() {
     dispatch(getCurrentWeather(cityKey, cityName));
     dispatch(getForecast(cityKey));
     setSearchValue(cityName);
-    setCloseSearches(true)
+    setCloseSearches(true);
+    setCitiesResult([]);
+    setSearchValue("");
   };
 
   useEffect(() => {
     if (searchValue.length > 0) {
       const delayDebounce = setTimeout(() => {
-        // search();
-      }, 3000);
+        search();
+      }, 1000);
 
       return () => clearTimeout(delayDebounce);
     }
-  }, [searchValue]);
+  }, [searchValue, closeSearches]);
   return (
     <div className="searchBar">
       <input
@@ -73,13 +66,12 @@ export default function SearchBar() {
           checkEnglish(e);
         }}
       />
-      <div className="searchIcon">
-        <IconButton color="primary" onClick={search}>
-          <SearchIcon />
-        </IconButton>
-      </div>
       {searchValue && citiesResult.length > 0 ? (
-        <div className={`searchData ${closeSearches?'closeSearches':''} ${currentTheme === "dark" ? "darkSearches" : ""}`}>
+        <div
+          className={`searchData ${closeSearches ? "closeSearches" : ""} ${
+            currentTheme === "dark" ? "darkSearches" : ""
+          }`}
+        >
           {citiesResult.map((c) => {
             return (
               <div

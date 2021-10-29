@@ -12,26 +12,6 @@ export const addToFavorites = (weatherDetails) => (dispatch, getState) => {
     "favorites",
     JSON.stringify(getState().favorites.favorites)
   );
-  //     const favoritesArr = [];
-  //     if (localStorage.getItem("favorites")) {
-  //     console.log(JSON.parse(localStorage.getItem("favorites")));
-  //     favoritesArr.push(JSON.parse(localStorage.getItem("favorites")));
-  //     favoritesArr.push(
-  //       weatherDetails,
-  //     );
-  //     localStorage.setItem("favorites", JSON.stringify(favoritesArr));
-  //   } else {
-  //     favoritesArr.push(
-  //       weatherDetails,
-  //     );
-  //     localStorage.setItem("favorites", JSON.stringify(favoritesArr));
-  //   }
-  //   dispatch({
-  //     type: favoritesActions.ADD_TO_FAVORITES,
-  //     payload: {
-  //       weatherDetails: favoritesArr,
-  //     },
-  //   });
 };
 export const removeFromFavorites = (cityKey) => (dispatch, getState) => {
   dispatch({ type: REMOVE_FROM_FAVORITES, payload: cityKey });

@@ -18,9 +18,6 @@ export default function MainContainer() {
   const geoLocation = useState(JSON.parse(localStorage.getItem("geoLocation")));
 
   useEffect(() => {
-    // setLiked(
-    //   favorites.filter((c) => c.cityKey === currentWeather.cityKey).length
-    // );
     const getCurrentLocation = async () => {
       try {
         if (params.cityKey) {
@@ -54,7 +51,7 @@ export default function MainContainer() {
           <h2>{loading ? null : currentWeather?.cityName}</h2>
           <span className="degrees">
             {loading ? null : error ? (
-              <h1>{error}</h1>
+              <h1>{error.message}</h1>
             ) : (
               <span>
                 {currentWeather?.details
@@ -80,7 +77,7 @@ export default function MainContainer() {
         {loading ? (
           <CircularProgress />
         ) : error ? (
-          <h1>{error}</h1>
+          <h1>{error.message}</h1>
         ) : (
           currentWeather.details?.WeatherText
         )}

@@ -24,18 +24,24 @@ export default function ForecastCards() {
     if (params.cityKey) {
       dispatch(getForecast(params.cityKey));
     } else {
-      currentWeather
+      currentWeather.cityKey
         ? dispatch(getForecast(currentWeather.cityKey))
         : dispatch(getForecast("215854"));
     }
-
   }, [dispatch]);
   return (
     <div className="forecastCardRow">
-      {loading ? (
-        null
-      ) : error ? (
-        <h2>{error}</h2>
+      {loading ? null : error ? (
+        <h2
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          {error.message}
+        </h2>
       ) : (
         forecast?.DailyForecasts?.map((card) => {
           return (

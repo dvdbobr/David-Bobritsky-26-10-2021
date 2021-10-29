@@ -25,17 +25,17 @@ export const getCurrentWeather = (cityKey, cityName) => async (dispatch) => {
   });
 
   try {
-    if (localStorage.getItem("currentWeather")) {
-      console.log("in storage");
-      dispatch({
-        type: weatherActions.CURRENT_WEATHER_SUCCESS,
-        payload: {
-          details: JSON.parse(localStorage.getItem("currentWeather")),
-          cityName: cityName,
-          cityKey: cityKey,
-        },
-      });
-    } else {
+    // if (localStorage.getItem("currentWeather")) {
+    //   console.log("in storage");
+    //   dispatch({
+    //     type: weatherActions.CURRENT_WEATHER_SUCCESS,
+    //     payload: {
+    //       details: JSON.parse(localStorage.getItem("currentWeather")),
+    //       cityName: cityName,
+    //       cityKey: cityKey,
+    //     },
+    //   });
+    // } else {
       console.log("not in storage");
       const data = await axios.get(`/api/currentWeather/${cityKey}`);
 
@@ -48,7 +48,7 @@ export const getCurrentWeather = (cityKey, cityName) => async (dispatch) => {
         },
       });
       localStorage.setItem("currentWeather", JSON.stringify(data.data[0]));
-    }
+    // }
   } catch (err) {
     dispatch({
       type: weatherActions.CURRENT_WEATHER_FAILURE,
@@ -63,13 +63,13 @@ export const getForecast = (cityKey) => async (dispatch) => {
   });
   // console.log("im in forecast action");
   try {
-    if (localStorage.getItem("forecast")) {
-      console.log("in storage");
-      dispatch({
-        type: weatherActions.FORECAST_SUCCESS,
-        payload: JSON.parse(localStorage.getItem("forecast")),
-      });
-    } else {
+    // if (localStorage.getItem("forecast")) {
+    //   console.log("in storage");
+    //   dispatch({
+    //     type: weatherActions.FORECAST_SUCCESS,
+    //     payload: JSON.parse(localStorage.getItem("forecast")),
+    //   });
+    // } else {
       console.log("not in storage");
       const data = await axios.get(`/api/forecast/${cityKey}`);
       dispatch({
@@ -77,7 +77,7 @@ export const getForecast = (cityKey) => async (dispatch) => {
         payload: data.data,
       });
       localStorage.setItem("forecast", JSON.stringify(data.data));
-    }
+    // }
   } catch (err) {
     dispatch({
       type: weatherActions.FORECAST_FAILURE,

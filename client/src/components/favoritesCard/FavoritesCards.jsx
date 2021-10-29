@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getForecast } from "../../redux/actions/weatherActions";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import "./favoritesCards.css";
 import Button from "@mui/material/Button";
@@ -21,7 +20,6 @@ export default function FavoritesCards() {
     dispatch(removeFromFavorites(cityKey));
   };
   useEffect(() => {
-    // dispatch(getForecast("215854"));
   }, [favorites]);
 
   return (

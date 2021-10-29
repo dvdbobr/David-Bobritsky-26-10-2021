@@ -8,23 +8,33 @@
     width: 100vw;
 }
 
+.navbarRight {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
 .navbarLeft>span {
     font-weight: bold;
     font-size: clamp(1rem, 2vw, 2rem);
 }
 
-.theme{
+.theme {
     margin: 0 10px;
 }
-.degreeToggle{
+
+.degreeToggle {
     margin-right: 20px;
 }
-.darkNavbar{
+
+.darkNavbar {
     background-color: var(--darkNavbar);
 }
-.darkNavbar>div>span{
+
+.darkNavbar>div>span {
     color: var(--darkText)
 }
+
 .darkNavbar>.navbarRight>a>button[aria-pressed="false"]>span {
     color: var(--darkSecondaryText)
 }
@@ -40,25 +50,36 @@ a>button>span {
 .MuiButtonBase-root {
     background-color: rgba(255, 255, 255, 0.411) !important;
 }
-.MuiButtonBase-root[aria-pressed="false"]{
+
+.MuiButtonBase-root[aria-pressed="false"] {
     color: var(--darkSecondaryText) !important
 }
-.Mui-selected{
-    background-color:rgba(10, 3, 3, 0.102) !important;
-    color:white !important
+
+.Mui-selected {
+    background-color: rgba(10, 3, 3, 0.102) !important;
+    color: white !important
 }
-.darkNavbar>.navbarRight .MuiButtonBase-root{
+
+.darkNavbar>.navbarRight .MuiButtonBase-root {
     background-color: rgba(255, 255, 255, 0.198) !important
 }
-.darkNavbar>.navbarRight .Mui-selected{
+
+.darkNavbar>.navbarRight .Mui-selected {
     background-color: rgba(255, 255, 255, 0.411) !important;
 }
 
-
 @media (max-width: 880px) {
-    /* .navbar-left>span {
-        font-size: 1rem;
-    } */
+
+    .navbarLeft >span{
+        display: none;
+    }
+    .navbarRight {
+        width: 100%
+    }
+    .theme{
+        display:flex;
+        justify-self: end;
+    }
     .navbar {
         padding: 0 15px;
     }

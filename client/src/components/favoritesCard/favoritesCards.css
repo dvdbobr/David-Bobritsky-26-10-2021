@@ -37,3 +37,8 @@
 .darkModeFavorites{
     background-color:var(--darkSecondaryText)
 }
+@media (max-width: 880px) {
+    .favorites{
+        justify-content:center;
+    }
+}

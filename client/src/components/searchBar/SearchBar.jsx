@@ -14,7 +14,9 @@ export default function SearchBar() {
   const [isEnglish, setIsEnglish] = useState(true);
   const [citiesResult, setCitiesResult] = useState("");
   const currentWeatherData = useSelector((state) => state.currentWeather);
+  const currentTheme = useSelector((state) => state.theme.theme);
   const { loading, error, currentWeather } = currentWeatherData;
+  const [closeSearches,setCloseSearches] = useState(false);
   const dispatch = useDispatch();
 
   const search = async () => {
@@ -22,6 +24,7 @@ export default function SearchBar() {
     //   setCitiesResult(JSON.parse(localStorage.getItem("currentCity")));
     // }
     // else {
+      setCloseSearches(false);
     try {
       const response = await axios.get(`/api/autoComplete?q=${searchValue}`);
       setCitiesResult(response.data);
@@ -46,12 +49,13 @@ export default function SearchBar() {
     dispatch(getCurrentWeather(cityKey, cityName));
     dispatch(getForecast(cityKey));
     setSearchValue(cityName);
+    setCloseSearches(true)
   };
 
   useEffect(() => {
     if (searchValue.length > 0) {
       const delayDebounce = setTimeout(() => {
-        search();
+        // search();
       }, 3000);
 
       return () => clearTimeout(delayDebounce);
@@ -75,7 +79,7 @@ export default function SearchBar() {
         </IconButton>
       </div>
       {searchValue && citiesResult.length > 0 ? (
-        <div className="searchData">
+        <div className={`searchData ${closeSearches?'closeSearches':''} ${currentTheme === "dark" ? "darkSearches" : ""}`}>
           {citiesResult.map((c) => {
             return (
               <div

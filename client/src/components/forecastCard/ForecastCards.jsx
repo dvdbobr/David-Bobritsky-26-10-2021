@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { getForecast } from "../../redux/actions/weatherActions";
@@ -29,12 +29,11 @@ export default function ForecastCards() {
         : dispatch(getForecast("215854"));
     }
 
-    // console.log(forecast);
   }, [dispatch]);
   return (
     <div className="forecastCardRow">
       {loading ? (
-        <h2>spinner</h2>
+        null
       ) : error ? (
         <h2>{error}</h2>
       ) : (
@@ -47,12 +46,6 @@ export default function ForecastCards() {
             >
               <div className="forecastCardDay">
                 <span>{dayOfWeek(card.Date)}</span>
-                {/* <span>
-                  {card.Date.slice(0, card.Date.indexOf("T"))
-                    .split("-")
-                    .reverse()
-                    .join("-")}
-                </span> */}
               </div>
 
               <span className="forecastCardDegrees">
@@ -65,7 +58,6 @@ export default function ForecastCards() {
                     )}C°`}
               </span>
               <span>{card.Day.IconPhrase}</span>
-              {/* <span>Night: {card.Night.IconPhrase}</span> */}
             </div>
           );
         })

@@ -25,7 +25,7 @@ export default function Navbar() {
   return (
     <div className={`navbar ${currentTheme === "dark" ? "darkNavbar" : ""}`}>
       <div className="navbarLeft">
-        <span>My WeatherApp</span>
+        <span>WeatherApp</span>
       </div>
       <div className="navbarRight">
         <ToggleButtonGroup>
@@ -49,26 +49,28 @@ export default function Navbar() {
               <span>C°</span>
             </ToggleButton>
           </div>
-          <Link to="/">
-            <ToggleButton
-              color="info"
-              value="home"
-              exclusive
-              selected={location.pathname === "/"}
-            >
-              <span>home</span>
-            </ToggleButton>
-          </Link>
-          <Link to="/favorites">
-            <ToggleButton
-              color="info"
-              value="favorites"
-              exclusive
-              selected={location.pathname === "/favorites"}
-            >
-              <span>favorites</span>
-            </ToggleButton>
-          </Link>
+          <div className="pageNav">
+            <Link to="/">
+              <ToggleButton
+                color="info"
+                value="home"
+                exclusive
+                selected={location.pathname === "/"}
+              >
+                <span>home</span>
+              </ToggleButton>
+            </Link>
+            <Link to="/favorites">
+              <ToggleButton
+                color="info"
+                value="favorites"
+                exclusive
+                selected={location.pathname === "/favorites"}
+              >
+                <span>favorites</span>
+              </ToggleButton>
+            </Link>
+          </div>
           <span className="theme">
             {currentTheme === "dark" ? (
               <LightModeIcon

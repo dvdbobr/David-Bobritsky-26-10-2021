@@ -56,6 +56,25 @@ router
         res.status(500).send(err);
       }
     }
+  })
+  .get("/geolocation", async (req, res) => {
+    const { q } = req.query;
+    try {
+      if (q) {
+        const response = await axios({
+          method: "GET",
+          url: "http://dataservice.accuweather.com/locations/v1/cities/geoposition/search",
+          params: {
+            apikey: process.env.API_KEY,
+            q: q,
+          },
+        });
+        res.status(200).send(response.data);
+      }
+    } catch (err) {
+      console.log(err);
+      res.status(500).send(err);
+    }
   });
 
 module.exports = router;

@@ -27,7 +27,7 @@
     height: 150px;
     width: calc(100% - 40px);
     border-radius: 0 0 10px 10px;
-    background-color: lightgoldenrodyellow;
+    background-color: white;
     overflow-y: auto;
 }
 
@@ -38,12 +38,13 @@
     cursor: pointer;
     background-color: rgb(250, 210, 210);
 }
+.closeSearches{
+    display: none;
+}
+.darkSearches{
+    color:black;
+}
 
-/* .searchIcon {
-    position: absolute;
-    right: 11px;
-    top: 8px;
-} */
 
 @media (max-width: 880px) {
     .searchBar {

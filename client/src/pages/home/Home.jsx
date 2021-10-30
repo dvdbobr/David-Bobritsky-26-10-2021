@@ -6,10 +6,11 @@ import "./home.css";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { getCurrentWeather } from "../../redux/actions/weatherActions";
+import { useParams } from "react-router";
 
 export default function Home() {
   const dispatch = useDispatch();
-  const geoLocationFromStorage = useState(JSON.parse(localStorage.getItem("geoLocation")));
+  const params = useParams();
   const [geoLocation, setGeoLocation] = useState({
     latitude: "",
     longitude: "",
@@ -23,7 +24,6 @@ export default function Home() {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         });
-        console.log(`${position.coords.latitude} ${position.coords.longitude}`);
       });
     } else {
       console.log("No Location Found");
@@ -31,9 +31,8 @@ export default function Home() {
   }, []);
   useEffect(() => {
     const getCurrentLocation = async () => {
-      console.log(geoLocation);
       try {
-        if (geoLocation&&!geoLocationFromStorage) {
+        if (geoLocation) {
           localStorage.setItem("geoLocation", JSON.stringify(geoLocation));
           const res = await axios({
             method: "GET",
@@ -48,7 +47,9 @@ export default function Home() {
         console.log(e);
       }
     };
-    getCurrentLocation();
+    if (!params.cityKey) {
+      getCurrentLocation();
+    }
   }, [geoLocation]);
   return (
     <div className={`home ${currentTheme === "dark" ? "darkMode" : ""}`}>

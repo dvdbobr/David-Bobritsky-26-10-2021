@@ -15,15 +15,14 @@ export default function MainContainer() {
   const currentTheme = useSelector((state) => state.theme.theme);
   const currentDegreeUnit = useSelector((state) => state.theme.degreeUnit);
   const params = useParams();
-  const geoLocation = useState(JSON.parse(localStorage.getItem("geoLocation")));
 
   useEffect(() => {
     if (params.cityKey) {
       dispatch(getCurrentWeather(params.cityKey, params.cityName));
     } else {
-      if (!geoLocation) {
-        dispatch(getCurrentWeather("215854", "Tel Aviv"));
-      }
+      currentWeather
+        ? dispatch(getCurrentWeather(currentWeather.cityKey,currentWeather.cityName))
+        : dispatch(getCurrentWeather("215854"));
     }
   }, [dispatch]);
   return (
@@ -37,7 +36,7 @@ export default function MainContainer() {
           <h2>{loading ? null : currentWeather?.cityName}</h2>
           <span className="degrees">
             {loading ? null : error ? (
-              <h1>{error.message}</h1>
+              null
             ) : (
               <span>
                 {currentWeather?.details
@@ -62,7 +61,7 @@ export default function MainContainer() {
         {loading ? (
           <CircularProgress />
         ) : error ? (
-          <h1>{error.message}</h1>
+          null
         ) : (
           currentWeather.details?.WeatherText
         )}

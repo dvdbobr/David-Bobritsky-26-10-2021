@@ -23,7 +23,7 @@ export default function ForecastCards() {
   useEffect(() => {
     if (params.cityKey) {
       dispatch(getForecast(params.cityKey));
-    } else {
+    } else  {
       currentWeather.cityKey
         ? dispatch(getForecast(currentWeather.cityKey))
         : dispatch(getForecast("215854"));
